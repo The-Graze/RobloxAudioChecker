@@ -89,7 +89,7 @@ internal static partial class RobloxAssetChecker
         
         ids.Add("Sorter by Graze");
         const string outputFile = "Sorted IDs.txt";
-        var output = ids.Aggregate("Audio Checker by Graze" + "\n", (current, id) => current + (id + "\n"));
+        var output = ids.Aggregate("Audio Checker by Graze" + "\n", (current, id) => current + (id + " - \n"));
         await File.WriteAllTextAsync(outputFile, output);
         
         Console.SetCursorPosition(0, statusLine + 2);
