@@ -97,7 +97,7 @@ internal static partial class RobloxAssetChecker
         Console.ForegroundColor = ConsoleColor.DarkMagenta;
         const string outputFile = "Sorted IDs.txt";
         var final = "";
-        var output = "Audio AutoCheck by Graze\n";
+        var output = " # Audio AutoCheck by Graze # \n # Publicly playable ID's # ";
         foreach (var id in ids)
         {
             output += $"{id} - \n";
