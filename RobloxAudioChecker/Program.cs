@@ -66,19 +66,19 @@ internal static partial class RobloxAssetChecker
                 await Task.Delay(1020);
             var content = await page.GetContentAsync();
             
-            if (content.Contains("MuiTypography-root web-blox-css-tss-a5n33q-Typography-body1-Typography-root-timeStamp MuiTypography-inherit web-blox-css-mui-1de74pe"))
-            {
-                status = "Playable";
-                ids.Add(id);
-                playable++;
-                Console.ForegroundColor = ConsoleColor.Green;
-            }
-            else if(content.Contains("Audio preview is not available on your browser."))
+            if(content.Contains("Audio preview is not available on your browser."))
             {
                 status = "Priavte/Group";
                 offSaleIds.Add(id);
                 playable++;
                 Console.ForegroundColor = ConsoleColor.Blue;
+            }
+            else if (content.Contains("MuiTypography-root web-blox-css-tss-a5n33q-Typography-body1-Typography-root-timeStamp MuiTypography-inherit web-blox-css-mui-1de74pe"))
+            {
+                status = "Playable";
+                ids.Add(id);
+                playable++;
+                Console.ForegroundColor = ConsoleColor.Green;
             }
             else
             {
@@ -97,7 +97,7 @@ internal static partial class RobloxAssetChecker
         Console.ForegroundColor = ConsoleColor.DarkMagenta;
         const string outputFile = "Sorted IDs.txt";
         var output = ids.Aggregate("Audio Checker by Graze" + "\n", (current, id) => current + (id + " - \n"));
-        var output2 = offSaleIds.Aggregate("\n# Private(*) Or group(?) may not work everywhere or at all but some do #\n", (current2, oid) => current2 + (oid + " - \n"));
+        var output2 = offSaleIds.Aggregate(" # Group (?) / Semi Private ID's (?) # \nsome work everywhere some dont no idea\n", (current, id) => current + (id + " - \n"));
         var final = offSaleIds.Count > 0 ? output + output2 : output;
         await File.WriteAllTextAsync(outputFile, final);
         
