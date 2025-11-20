@@ -8,7 +8,7 @@ internal static partial class RobloxAssetChecker
     private static async Task Main()
     {
         Console.Clear();
-        
+        Console.ForegroundColor = ConsoleColor.DarkMagenta;
         Console.WriteLine("Graze's Audio Checker");
         Console.WriteLine(new string('-', 50));
         
@@ -43,6 +43,8 @@ internal static partial class RobloxAssetChecker
         Console.WriteLine($"Found {cleanedIds.Count}/{rawIds.Count} IDs for checking (duplicates removed)\n");
 
         var ids = new List<string?>();
+        // ReSharper disable once CollectionNeverUpdated.Local
+        List<string> offSaleIds = [];
         var total = cleanedIds.Count;
         
         var statusLine = Console.CursorTop;
@@ -54,7 +56,7 @@ internal static partial class RobloxAssetChecker
             Console.SetCursorPosition(0, statusLine);
             var status = "Checking...";
             var line = $"Checking {id}: {status} ({i + 1}/{total})";
-            Console.ForegroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.DarkMagenta;
             Console.Write(line.PadRight(Console.WindowWidth));
 
             var url = $"https://create.roblox.com/store/asset/{id}";
@@ -64,13 +66,19 @@ internal static partial class RobloxAssetChecker
                 await Task.Delay(1020);
             var content = await page.GetContentAsync();
             
-            if (content.Contains("Audio preview is not available on your browser.") ||
-                content.Contains("MuiTypography-root web-blox-css-tss-a5n33q-Typography-body1-Typography-root-timeStamp MuiTypography-inherit web-blox-css-mui-1de74pe"))
+            if (content.Contains("MuiTypography-root web-blox-css-tss-a5n33q-Typography-body1-Typography-root-timeStamp MuiTypography-inherit web-blox-css-mui-1de74pe"))
             {
                 status = "Playable";
                 ids.Add(id);
                 playable++;
                 Console.ForegroundColor = ConsoleColor.Green;
+            }
+            else if(content.Contains("Audio preview is not available on your browser."))
+            {
+                status = "Priavte/Group";
+                ids.Add(id);
+                playable++;
+                Console.ForegroundColor = ConsoleColor.Blue;
             }
             else
             {
@@ -86,11 +94,11 @@ internal static partial class RobloxAssetChecker
             
             await Task.Delay(300);
         }
-        
-        ids.Add("Sorter by Graze");
+        Console.ForegroundColor = ConsoleColor.DarkMagenta;
         const string outputFile = "Sorted IDs.txt";
         var output = ids.Aggregate("Audio Checker by Graze" + "\n", (current, id) => current + (id + " - \n"));
-        await File.WriteAllTextAsync(outputFile, output);
+        var output2 = offSaleIds.Aggregate("\n# Private(*) Or group(?) may not work everywhere or at all but some do #\n", (current2, oid) => current2 + (oid + " - \n"));
+        await File.WriteAllTextAsync(outputFile, output + output2);
         
         Console.SetCursorPosition(0, statusLine + 2);
         Console.WriteLine($"\n {playable}/{total}: \nResults saved to {outputFile}");
