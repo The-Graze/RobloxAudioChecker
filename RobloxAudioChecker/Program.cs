@@ -68,7 +68,7 @@ internal static partial class RobloxAssetChecker
             
             if(content.Contains("Audio preview is not available on your browser."))
             {
-                status = "Priavte/Group";
+                status = "Private/Group";
                 offSaleIds.Add(id);
                 playable++;
                 Console.ForegroundColor = ConsoleColor.Blue;
@@ -96,9 +96,23 @@ internal static partial class RobloxAssetChecker
         }
         Console.ForegroundColor = ConsoleColor.DarkMagenta;
         const string outputFile = "Sorted IDs.txt";
-        var output = ids.Aggregate("Audio Checker by Graze" + "\n", (current, id) => current + (id + " - \n"));
-        var output2 = offSaleIds.Aggregate(" # Group (?) / Semi Private ID's (?) # \nsome work everywhere some dont no idea\n", (current, id) => current + (id + " - \n"));
-        var final = offSaleIds.Count > 0 ? output + output2 : output;
+        var final = "";
+        var output = "Audio AutoCheck by Graze\n";
+        foreach (var id in ids)
+        {
+            output += $"{id} - \n";
+        }
+        var output2 = " # Group (?) / Semi Private ID's (?) # \n # some work everywhere some dont - no idea #\n";
+        foreach (var id in offSaleIds)
+        {
+            output2 += $"{id} - \n";
+        }
+        
+        if (offSaleIds.Count > 0) 
+            final = output + output2; 
+        else
+            final = output;
+
         await File.WriteAllTextAsync(outputFile, final);
         
         Console.SetCursorPosition(0, statusLine + 2);
