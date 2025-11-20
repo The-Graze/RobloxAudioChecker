@@ -102,7 +102,7 @@ internal static partial class RobloxAssetChecker
         {
             output += $"{id} - \n";
         }
-        var output2 = " # Group (?) / Semi Private ID's (?) # \n # some work everywhere some dont - no idea #\n";
+        var output2 = " # Group (?) / Semi Private ID's (?) # \n # most work everywhere some dont - no idea #\n";
         foreach (var id in offSaleIds)
         {
             output2 += $"{id} - \n";
