@@ -44,7 +44,7 @@ internal static partial class RobloxAssetChecker
 
         var ids = new List<string?>();
         // ReSharper disable once CollectionNeverUpdated.Local
-        List<string> offSaleIds = [];
+        List<string?> offSaleIds = [];
         var total = cleanedIds.Count;
         
         var statusLine = Console.CursorTop;
@@ -76,7 +76,7 @@ internal static partial class RobloxAssetChecker
             else if(content.Contains("Audio preview is not available on your browser."))
             {
                 status = "Priavte/Group";
-                ids.Add(id);
+                offSaleIds.Add(id);
                 playable++;
                 Console.ForegroundColor = ConsoleColor.Blue;
             }
@@ -98,7 +98,8 @@ internal static partial class RobloxAssetChecker
         const string outputFile = "Sorted IDs.txt";
         var output = ids.Aggregate("Audio Checker by Graze" + "\n", (current, id) => current + (id + " - \n"));
         var output2 = offSaleIds.Aggregate("\n# Private(*) Or group(?) may not work everywhere or at all but some do #\n", (current2, oid) => current2 + (oid + " - \n"));
-        await File.WriteAllTextAsync(outputFile, output + output2);
+        var final = offSaleIds.Count > 0 ? output + output2 : output;
+        await File.WriteAllTextAsync(outputFile, final);
         
         Console.SetCursorPosition(0, statusLine + 2);
         Console.WriteLine($"\n {playable}/{total}: \nResults saved to {outputFile}");
