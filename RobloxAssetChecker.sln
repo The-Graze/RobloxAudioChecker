@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RobloxAudioChecker", "RobloxAudioChecker\RobloxAudioChecker.csproj", "{7F29E013-6A0E-4609-B4C8-319F918722C9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RobloxAssetChecker", "RobloxAssetChecker\RobloxAssetChecker.csproj", "{7F29E013-6A0E-4609-B4C8-319F918722C9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
