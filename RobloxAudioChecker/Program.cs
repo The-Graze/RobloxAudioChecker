@@ -97,12 +97,12 @@ internal static partial class RobloxAssetChecker
         Console.ForegroundColor = ConsoleColor.DarkMagenta;
         const string outputFile = "Sorted IDs.txt";
         var final = "";
-        var output = " # Audio AutoCheck by Graze # \n # Publicly playable ID's # ";
+        var output = " # Audio AutoCheck by Graze # \n # Publicly playable ID's # \n";
         foreach (var id in ids)
         {
             output += $"{id} - \n";
         }
-        var output2 = " # Group (?) / Semi Private ID's (?) # \n # most work everywhere some dont - no idea #\n";
+        var output2 = " # Group (?) / Semi Private ID's (?) # \n # most work everywhere some dont - no idea #\n # if they are RLY old prob won't play at all in new games # \n";
         foreach (var id in offSaleIds)
         {
             output2 += $"{id} - \n";
