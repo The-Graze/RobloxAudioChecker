@@ -144,17 +144,40 @@ internal static partial class RobloxAssetChecker
             }
         }
 
-        var output =
-            " # Public Audio # \n" +
-            string.Join("\n", publicList.Select(Format)) +
-            "\n\n # Archived Audio # \n" +
-            string.Join("\n", archivedList.Select(Format)) +
-            "\n\n # Moderated / Missing # \n" +
-            string.Join("\n", missingList.Select(Format));
+        // =========================
+        // SAFE JSON BUILDER (FIX)
+        // =========================
 
-        await File.WriteAllTextAsync("audio - Sorted.txt", output);
+        string Escape(string s)
+        {
+            return s
+                .Replace("\\", "\\\\")
+                .Replace("\"", "\\\"")
+                .Replace("\n", "\\n")
+                .Replace("\r", "");
+        }
 
-        Console.WriteLine("\nDone! Saved to audio - Sorted.txt");
+        string BuildJson(List<AssetEntry> list)
+        {
+            return "[\n" + string.Join(",\n",
+                list.Select(x =>
+                    x.Label is null
+                        ? $"  {{ \"id\": {x.Id} }}"
+                        : $"  {{ \"id\": {x.Id}, \"label\": \"{Escape(x.Label)}\" }}"
+                )
+            ) + "\n]";
+        }
+
+        var jsonOutput =
+        $@"{{
+  ""public"": {BuildJson(publicList)},
+  ""archived"": {BuildJson(archivedList)},
+  ""missing"": {BuildJson(missingList)}
+}}";
+
+        await File.WriteAllTextAsync("audio - Sorted.json", jsonOutput);
+
+        Console.WriteLine("\nDone! Saved to audio - Sorted.json");
     }
 
     private static string Format(AssetEntry e)
