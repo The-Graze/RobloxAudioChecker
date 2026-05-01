@@ -8,9 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Clawfoot.Extensions.Newtonsoft" Version="0.1.0" />
-      <PackageReference Include="Healthify.Fleece.NewtonsoftJson" Version="0.9.0" />
-      <PackageReference Include="PuppeteerSharp" Version="20.2.4" />
+      <PackageReference Include="PuppeteerSharp" Version="24.40.0" />
     </ItemGroup>
 
 </Project>
