@@ -144,10 +144,6 @@ internal static partial class RobloxAssetChecker
             }
         }
 
-        // =========================
-        // SAFE JSON BUILDER (FIX)
-        // =========================
-
         string Escape(string s)
         {
             return s
